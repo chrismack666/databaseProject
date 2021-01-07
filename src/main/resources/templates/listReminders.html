@@ -33,16 +33,11 @@
     var todayRemindes = [];
     var text = '';
     for (let i=0; i<reminder.length; i++) {
-        console.log(reminder[i].date);
-        console.log(Date.parse(reminder[i].date) < now);
-        console.log(Date.parse(reminder[i].date) > yesterday);
         if (Date.parse(reminder[i].date) < now && Date.parse(reminder[i].date) > yesterday) {
-            console.log(Date.parse(reminder[i].date));
             todayRemindes.push(reminder[i]);
             text += '\n' + reminder[i].text;
         }
     }
-    console.log(todayRemindes.length);
     if (todayRemindes.length > 0) {
         alert('There are ' + todayRemindes.length + ' reminders today:' + text);
     }

@@ -7,13 +7,15 @@
 </head>
 <body>
 <h2>Add new reminder</h2>
-<form action="/add" th:action="@{/add}" th:object="${reminders}" method="post">
+<form th:action="@{/add}" th:object="${reminder}" method="post">
     <table>
         <tr>
-            <td><input type="text" name="text" placeholder="Enter the reminder text"/></td>
+            <td><input type="text" th:field="*{text}" placeholder="Enter the reminder text" required/></td>
+            <td th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text Error</td>
         </tr>
         <tr>
-            <td><input type="date" name="date" placeholder="Date"></td>
+            <td><input type="date" th:field="*{date}" placeholder="Date" required></td>
+            <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</td>
         </tr>
         <tr>
             <td><button type="submit">Add</button></td>
