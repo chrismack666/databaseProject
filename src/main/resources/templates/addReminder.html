@@ -3,7 +3,7 @@
 <head>
     <title>Getting Started: Handling Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <h2>Add new reminder</h2>
@@ -14,7 +14,7 @@
             <td th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text Error</td>
         </tr>
         <tr>
-            <td><input type="date" th:field="*{date}" placeholder="Date" required></td>
+            <td><input type="date" th:field="*{date}" placeholder="Date" required/></td>
             <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</td>
         </tr>
         <tr>

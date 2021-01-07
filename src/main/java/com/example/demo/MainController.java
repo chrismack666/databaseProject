@@ -12,8 +12,16 @@ public class MainController {
     private ReminderRepository reminderRepository;
 
     @GetMapping("/")
-    public String mainList(Model model) {
-        Iterable<Reminder> reminders = reminderRepository.findAll();
+    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+        Iterable<Reminder> reminders;
+
+        if (filter != null && !filter.isEmpty()) {
+            reminders = reminderRepository.findByText(filter);
+        } else {
+            reminders = reminderRepository.findAll();
+        }
+
+        model.addAttribute("filter", filter);
         model.addAttribute("reminders", reminders);
         return "listReminders";
     }
@@ -28,18 +36,5 @@ public class MainController {
     public String add(Reminder reminder) {
         reminderRepository.save(reminder);
         return "redirect:/";
-    }
-
-    @PostMapping("/")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
-        Iterable<Reminder> reminders;
-
-        if (filter != null && !filter.isEmpty()) {
-            reminders = reminderRepository.findByText(filter);
-        } else {
-            reminders = reminderRepository.findAll();
-        }
-        model.put("reminders", reminders);
-        return "listReminders";
     }
 }

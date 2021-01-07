@@ -3,13 +3,13 @@
 <head>
     <title>Getting Started: Handling Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
 <h2>List of reminders</h2>
-<form method="post" action="/">
-    <input type="text" name="filter" placeholder="Enter text">
+<form method="get" action="/">
+    <input type="text" name="filter" value="${filter?ifExists}" placeholder="Search by text"/>
     <button type="submit">Search</button>
 </form>
 <table border="1">
@@ -18,7 +18,7 @@
         <th>Date</th>
     </tr>
     <tr th:each = "reminder: ${reminders}">
-        <td th:text="${reminder.text}"></td>
+        <td th:text="${reminder.text}" id="row-reminder"></td>
         <td th:text="${reminder.date}"></td>
     </tr>
 </table>
@@ -26,13 +26,14 @@
 <a href="/add"> Add new reminder </a>
 
 <script th:inline="javascript">
+    <![CDATA[
     var reminder = [[${reminders}]];
     var now = new Date();
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     var todayRemindes = [];
     var text = '';
-    for (let i=0; i<reminder.length; i++) {
+    for (let i=0; i < reminder.length; i++) {
         if (Date.parse(reminder[i].date) < now && Date.parse(reminder[i].date) > yesterday) {
             todayRemindes.push(reminder[i]);
             text += '\n' + reminder[i].text;
@@ -41,6 +42,7 @@
     if (todayRemindes.length > 0) {
         alert('There are ' + todayRemindes.length + ' reminders today:' + text);
     }
+    ]]>
 </script>
 
 </body>
