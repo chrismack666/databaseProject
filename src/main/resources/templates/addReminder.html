@@ -1,24 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Add new reminder</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <h2>Add new reminder</h2>
 <form th:action="@{/add}" th:object="${reminder}" method="post">
-    <table>
-        <tr>
-            <td><input type="text" th:field="*{text}" placeholder="Enter the reminder text" required/></td>
-        </tr>
-        <tr>
-            <td><input type="date" th:field="*{date}" placeholder="Date" required/></td>
-        </tr>
-        <tr>
-            <td><button type="submit">Add</button></td>
-        </tr>
-    </table>
+    <p><input type="text" size="50px" th:field="*{text}" placeholder="Enter the reminder text" required/></p>
+    <p><input type="date" th:field="*{date}" placeholder="Date" required/></p>
+    <p><button type="submit">Add</button></p>
 </form>
 </body>
 </html>

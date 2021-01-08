@@ -1,9 +1,12 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @Controller
 public class MainController {
@@ -12,15 +15,17 @@ public class MainController {
 
     @GetMapping("/")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Reminder> reminders;
+        Iterable<Reminder> freminders,
+                reminders = reminderRepository.findAll();
 
         if (filter != null && !filter.isEmpty()) {
-            reminders = reminderRepository.findByText(filter);
+            freminders = reminderRepository.findByText(filter);
         } else {
-            reminders = reminderRepository.findAll();
+            freminders = reminderRepository.findAll();
         }
 
         model.addAttribute("filter", filter);
+        model.addAttribute("freminders", freminders);
         model.addAttribute("reminders", reminders);
         return "listReminders";
     }

@@ -1,6 +1,5 @@
 package com.example.demo;
 
-;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
@@ -9,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 public class Reminder {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

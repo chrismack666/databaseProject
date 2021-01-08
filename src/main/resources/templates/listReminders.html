@@ -1,49 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>List of reminders</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+    <h2>Reminders for today</h2>
+    <table border="1">
+        <tr>
+            <th>Text</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each = "reminder: ${reminders}" th:if="${#dates.format(reminder.date, 'dd-MM-yyyy') == #dates.format(#dates.createNow(), 'dd-MM-yyyy')}">
+            <td th:text="${reminder.text}"></td>
+            <td th:text="${#dates.format(reminder.date, 'dd-MM-yyyy')}"></td>
+        </tr>
+    </table>
 
-<h2>List of reminders</h2>
-<form method="get" action="/">
-    <input type="text" name="filter" placeholder="Search by text"/>
-    <button type="submit">Search</button>
-</form>
-<table border="1">
-    <tr>
-        <th>Text</th>
-        <th>Date</th>
-    </tr>
-    <tr th:each = "reminder: ${reminders}">
-        <td th:text="${reminder.text}" id="row-reminder"></td>
-        <td th:text="${reminder.date}"></td>
-    </tr>
-</table>
+    <a href="/add"> Add new reminder </a>
 
-<a href="/add"> Add new reminder </a>
-
-<script th:inline="javascript">
-    <![CDATA[
-    var reminder = [[${reminders}]];
-    var now = new Date();
-    var yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    var todayRemindes = [];
-    var text = '';
-    for (let i=0; i < reminder.length; i++) {
-        if (Date.parse(reminder[i].date) < now && Date.parse(reminder[i].date) > yesterday) {
-            todayRemindes.push(reminder[i]);
-            text += '\n' + reminder[i].text;
-        }
-    }
-    if (todayRemindes.length > 0) {
-        alert('There are ' + todayRemindes.length + ' reminders today:' + text);
-    }
-    ]]>
-</script>
-
+    <h2>List of reminders</h2>
+    <form method="get" action="/">
+        <input type="text" name="filter" placeholder="Search by text"/>
+        <button type="submit">Search</button>
+    </form>
+    <table border="1">
+        <tr>
+            <th>Text</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each = "freminder: ${freminders}">
+            <td th:text="${freminder.text}" id="row-reminder"></td>
+            <td th:text="${#dates.format(freminder.date, 'dd-MM-yyyy')}"></td>
+        </tr>
+    </table>
 </body>
 </html>
