@@ -11,11 +11,9 @@
     <table>
         <tr>
             <td><input type="text" th:field="*{text}" placeholder="Enter the reminder text" required/></td>
-            <td th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text Error</td>
         </tr>
         <tr>
             <td><input type="date" th:field="*{date}" placeholder="Date" required/></td>
-            <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</td>
         </tr>
         <tr>
             <td><button type="submit">Add</button></td>
