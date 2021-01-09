@@ -12,6 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Date;
+import java.util.List;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -27,13 +30,40 @@ class DatabaseProjectApplicationTests {
     private MockMvc mockMvc;
 
     @Autowired
-    private ReminderRepository reminderRepository;
+    private ReminderServiseImpl reminderService;
+
+    @Test
+    public void checkAndAddTest() {
+        long millis = new Date().getTime();
+        Reminder reminder1 = new Reminder("test", new Date(millis));
+        boolean check1 = reminderService.checkAndAdd(reminder1);
+        Assert.assertEquals(true, check1);
+        Reminder reminder2 = new Reminder("test", new Date(millis));
+        boolean check2 = reminderService.checkAndAdd(reminder2);
+        Assert.assertEquals(false, check2);
+
+    }
+
+    @Test
+    public void getFilterTest() {
+        long millis = new Date().getTime();
+
+        Reminder reminder1 = new Reminder("test1", new Date(millis));
+        reminderService.checkAndAdd(reminder1);
+
+        Reminder reminder2 = new Reminder("test2", new Date(millis));
+        reminderService.checkAndAdd(reminder2);
+
+        List<Reminder> reminders = reminderService.getFilter("test1");
+        Assert.assertEquals(1, reminders.size());
+    }
 
     @Test
     public void contextLoadsOnListTest() throws Exception {
         this.mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Reminders for today")))
                 .andExpect(content().string(containsString("List of reminders")));
     }
 
@@ -61,7 +91,7 @@ class DatabaseProjectApplicationTests {
                 .param("date", "2021-01-11 00:00:00"))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/"));
-        Assert.assertEquals("10", String.valueOf(reminderRepository.findByText("Wash the floor").get(0).getId()));
+        Assert.assertEquals("10", String.valueOf(reminderService.getByText("Wash the floor").get(0).getId()));
     }
 
 
@@ -74,8 +104,6 @@ class DatabaseProjectApplicationTests {
                 .andExpect(xpath("//*[@id='row-reminder']").nodeCount(2))
                 .andExpect(xpath("//*[@id='row-reminder']").string("Wash up"));
     }
-
-
 
 
 }

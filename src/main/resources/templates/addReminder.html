@@ -10,6 +10,7 @@
 <form th:action="@{/add}" th:object="${reminder}" method="post">
     <p><input type="text" size="50px" th:field="*{text}" placeholder="Enter the reminder text" required/></p>
     <p><input type="date" th:field="*{date}" placeholder="Date" required/></p>
+    <p class="error-text" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Name Error</p>
     <p><button type="submit">Add</button></p>
 </form>
 </body>

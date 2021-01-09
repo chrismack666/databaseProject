@@ -38,3 +38,8 @@ a {
     -webkit-appearance: button;
 }
 
+.error-text {
+    color: #ff0000;
+    text-decoration: underline;
+}
+

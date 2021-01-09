@@ -19,6 +19,13 @@ public class Reminder {
 
     private String text;
 
+    public Reminder () {}
+
+    public Reminder(String text, Date date) {
+        this.text = text;
+        this.date = date;
+    }
+
     public Integer getId() {
         return id;
     }

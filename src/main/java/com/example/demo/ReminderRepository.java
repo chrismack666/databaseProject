@@ -2,7 +2,6 @@ package com.example.demo;
 
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Date;
 import java.util.List;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
@@ -10,4 +9,5 @@ import java.util.List;
 
 public interface ReminderRepository extends CrudRepository<Reminder, Integer> {
     List<Reminder> findByText(String text);
+    List<Reminder> findAll();
 }
